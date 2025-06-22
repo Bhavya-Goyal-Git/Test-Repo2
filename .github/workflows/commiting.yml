@@ -1,0 +1,24 @@
+name: Commit-wrkflow
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: "10 5 * * *"
+  workflow_dispatch: # Allow manual triggers
+jobs:
+  dowork:
+    name: WriteandCommit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: 23f1002830@ds.study.iitm.ac.in
+        run: echo "Hello, world!" >> random.txt
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add *.txt
+          git commit -m "Updated random.txt" || exit 0
+          git push
